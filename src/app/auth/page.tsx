@@ -1,11 +1,12 @@
 'use client';
 import Input from '@/components/Input';
+import axios from 'axios';
 import { ChangeEvent, useCallback, useState } from 'react';
 
 export default function Auth() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [userName, setUserName] = useState<string>('');
+  const [name, setName] = useState<string>('');
   const [variant, setVariant] = useState<string>('login');
 
   const toggleVariant = useCallback(
@@ -15,6 +16,19 @@ export default function Auth() {
       ),
     []
   );
+
+  const register = useCallback(async () => {
+    try {
+      const user = await axios.post('/api/register', {
+        email,
+        name,
+        password,
+      });
+      console.log('Page:', user);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [email, password, name]);
 
   return (
     <div
@@ -43,10 +57,10 @@ export default function Auth() {
                   id="email"
                   label="Username"
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    setUserName(event.currentTarget.value)
+                    setName(event.currentTarget.value)
                   }
                   type="text"
-                  value={userName}
+                  value={name}
                 />
               )}
               <Input
@@ -68,7 +82,10 @@ export default function Auth() {
                 value={password}
               />
             </div>
-            <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+            <button
+              onClick={register}
+              className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition"
+            >
               {variant === 'login' ? 'Login' : 'Sign up'}
             </button>
             <p className="text-neutral-500 mt-12">

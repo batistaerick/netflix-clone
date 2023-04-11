@@ -3,7 +3,7 @@ import NextAuth from 'next-auth/next';
 import Credentials from 'next-auth/providers/credentials';
 import prismadb from '../../../lib/prismadb';
 
-export default NextAuth({
+NextAuth({
   providers: [
     Credentials({
       id: 'credentials',
@@ -53,3 +53,5 @@ export default NextAuth({
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
+
+export default NextAuth;
