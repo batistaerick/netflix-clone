@@ -1,9 +1,12 @@
 'use client';
 import Input from '@/components/Input';
 import axios from 'axios';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useCallback, useState } from 'react';
 
 export default function Auth() {
+  const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -17,18 +20,27 @@ export default function Auth() {
     []
   );
 
+  const login = useCallback(async () => {
+    await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+      callbackUrl: '/',
+    })
+      .then(() => router.push('/'))
+      .catch((error) => console.error(error));
+  }, [email, password]);
+
   const register = useCallback(async () => {
-    try {
-      const user = await axios.post('/api/register', {
+    await axios
+      .post('/api/register', {
         email,
         name,
         password,
-      });
-      console.log('Page:', user);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [email, password, name]);
+      })
+      .then(login)
+      .catch((error) => console.error(error));
+  }, [email, password, name, login]);
 
   return (
     <div
@@ -57,7 +69,7 @@ export default function Auth() {
                   id="email"
                   label="Username"
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    setName(event.currentTarget.value)
+                    setName(String(event.currentTarget.value))
                   }
                   type="text"
                   value={name}
@@ -67,7 +79,7 @@ export default function Auth() {
                 id="email"
                 label="Email"
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  setEmail(event.currentTarget.value)
+                  setEmail(String(event.currentTarget.value))
                 }
                 type="email"
                 value={email}
@@ -76,15 +88,15 @@ export default function Auth() {
                 id="password"
                 label="Password"
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  setPassword(event.currentTarget.value)
+                  setPassword(String(event.currentTarget.value))
                 }
                 type="password"
                 value={password}
               />
             </div>
             <button
-              onClick={register}
               className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition"
+              onClick={variant === 'login' ? login : register}
             >
               {variant === 'login' ? 'Login' : 'Sign up'}
             </button>

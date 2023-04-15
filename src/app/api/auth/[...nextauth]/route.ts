@@ -1,17 +1,17 @@
 import { compare } from 'bcrypt';
-import NextAuth from 'next-auth/next';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import prismadb from '../../../lib/prismadb';
+import prismadb from '../../../../../lib/prismadb';
 
-NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     Credentials({
-      id: 'credentials',
-      name: 'Credentials',
+      name: 'Sign in',
       credentials: {
         email: {
           label: 'Email',
-          type: 'text',
+          type: 'email',
+          placeholder: 'example@example.com',
         },
         password: {
           label: 'Password',
@@ -52,6 +52,8 @@ NextAuth({
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
-export default NextAuth;
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

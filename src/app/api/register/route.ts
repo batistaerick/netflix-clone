@@ -26,6 +26,6 @@ export async function POST(request: Request) {
     console.log('Register', user);
     return new Response(JSON.stringify(user));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
