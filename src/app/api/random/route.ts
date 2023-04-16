@@ -1,5 +1,5 @@
-import getCurrentUser from '../../../../lib/getCurrentUser';
-import prismadb from '../../../../lib/prismadb';
+import getCurrentUser from '../../../lib/getCurrentUser';
+import prismadb from '../../../lib/prismadb';
 
 export async function GET() {
   try {

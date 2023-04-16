@@ -1,4 +1,4 @@
-import useBillboard from '../../hooks/useBillboard';
+import useBillboard from '@/hooks/useBillboard';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 export default function Billboard() {
