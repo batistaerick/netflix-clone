@@ -1,6 +1,6 @@
+import Provider from '@/components/Provider';
 import { ReactNode } from 'react';
 import './globals.css';
-import Provider from '@/components/Provider';
 
 export const metadata = {
   title: 'Netflix',

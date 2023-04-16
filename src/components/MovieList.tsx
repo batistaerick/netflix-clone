@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import MovieCard from './MovieCard';
-import TypeMovie from '../types/Movie';
+import TypeMovie from '@/types/Movie';
 
 interface MovieListProps {
   data: TypeMovie[];

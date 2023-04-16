@@ -7,6 +7,5 @@ export default function useBillboard() {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-
   return { data, error, isLoading };
 }

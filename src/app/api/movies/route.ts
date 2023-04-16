@@ -1,9 +1,9 @@
-import getCurrentUser from '../../../lib/getCurrentUser';
-import prismadb from '../../../lib/prismadb';
+import serverAuth from '@/lib/getCurrentUser';
+import prismadb from '@/lib/prismadb';
 
 export async function GET() {
   try {
-    await getCurrentUser();
+    await serverAuth();
 
     const movies = await prismadb.movie.findMany();
 
