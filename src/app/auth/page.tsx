@@ -2,7 +2,7 @@
 import Input from '@/components/Input';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -39,6 +39,12 @@ export default function Auth() {
       .catch((error) => console.error(error));
   }, [email, password, name, login]);
 
+  function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === 'Enter') {
+      variant === 'login' ? login() : register();
+    }
+  }
+
   return (
     <div
       className={`
@@ -65,30 +71,31 @@ export default function Auth() {
                 <Input
                   id="email"
                   label="Username"
+                  type="text"
+                  value={name}
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
                     setName(String(event.currentTarget.value))
                   }
-                  type="text"
-                  value={name}
                 />
               )}
               <Input
                 id="email"
                 label="Email"
+                type="email"
+                value={email}
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
                   setEmail(String(event.currentTarget.value))
                 }
-                type="email"
-                value={email}
               />
               <Input
                 id="password"
                 label="Password"
+                type="password"
+                value={password}
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
                   setPassword(String(event.currentTarget.value))
                 }
-                type="password"
-                value={password}
+                onKeyDown={onKeyDown}
               />
             </div>
             <button

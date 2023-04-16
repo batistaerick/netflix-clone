@@ -1,19 +1,21 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 interface InputProps {
   id: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
   label: string;
   type?: string;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
   id,
-  onChange,
   value,
   label,
   type,
+  onKeyDown,
+  onChange,
 }: InputProps) {
   return (
     <div className="relative">
@@ -32,11 +34,12 @@ export default function Input({
           focus:ring-0
           peer
         `}
-        id={id}
-        value={value}
-        type={type}
-        onChange={onChange}
         placeholder=" "
+        id={id}
+        type={type}
+        value={value}
+        onKeyDown={onKeyDown}
+        onChange={onChange}
       />
       <label
         className={`
