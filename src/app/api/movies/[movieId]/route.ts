@@ -1,19 +1,23 @@
 import prismadb from '@/lib/prismadb';
 import serverAuth from '@/lib/serverAuth';
 
-export async function GET(request: Request) {
+interface TypeContext {
+  params: {
+    movieId: string;
+  };
+}
+
+export async function GET(request: Request, context: TypeContext) {
   try {
     await serverAuth();
 
-    const { movieId } = await request.json();
-
-    if (!movieId || typeof movieId !== 'string') {
-      throw new Error('Invalid Id');
+    if (!context.params.movieId || typeof context.params.movieId !== 'string') {
+      throw new Error('Invalid Id' + context.params.movieId);
     }
 
     const movies = await prismadb.movie.findUnique({
       where: {
-        id: movieId,
+        id: context.params.movieId,
       },
     });
 

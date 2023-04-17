@@ -13,8 +13,6 @@ export default function Watch({ params }: WatchProps) {
   const router = useRouter();
   const { data } = useMovie(params.movieId);
 
-  console.log('Dados:', data, params.movieId);
-
   return (
     <div className="h-screen w-screen bg-black">
       <nav

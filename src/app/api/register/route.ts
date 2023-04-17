@@ -23,7 +23,6 @@ export async function POST(request: Request) {
         emailVerified: new Date(),
       },
     });
-    console.log('Register', user);
     return new Response(JSON.stringify(user));
   } catch (error) {
     console.error(error);
