@@ -1,4 +1,4 @@
-import serverAuth from '@/lib/getCurrentUser';
+import serverAuth from '@/lib/serverAuth';
 
 export async function GET() {
   try {

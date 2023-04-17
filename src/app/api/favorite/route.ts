@@ -1,6 +1,6 @@
-import { without } from 'lodash';
 import prismadb from '@/lib/prismadb';
-import serverAuth from '@/lib/getCurrentUser';
+import serverAuth from '@/lib/serverAuth';
+import { without } from 'lodash';
 
 export async function POST(request: Request) {
   try {

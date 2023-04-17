@@ -1,5 +1,5 @@
-import serverAuth from '@/lib/getCurrentUser';
 import prismadb from '@/lib/prismadb';
+import serverAuth from '@/lib/serverAuth';
 
 export async function GET() {
   try {
