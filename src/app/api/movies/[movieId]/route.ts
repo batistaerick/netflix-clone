@@ -5,9 +5,6 @@ export async function GET(request: Request) {
   try {
     await serverAuth();
 
-    const test = await request.json();
-    console.log('MovieID:', test);
-
     const { movieId } = await request.json();
 
     if (!movieId || typeof movieId !== 'string') {
