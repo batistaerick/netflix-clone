@@ -21,6 +21,16 @@ model User {
   accounts Account[]
 }
 
+model Movie {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  videoUrl String
+  thumbnailUrl String
+  genre String
+  duration String
+}
+
 model Account {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
@@ -52,14 +62,4 @@ model VerificationToken {
   token String @unique
   expires DateTime
   @@unique([identifier, token])
-}
-
-model Movie {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  description String
-  videoUrl String
-  thumbnailUrl String
-  genre String
-  duration String
 }

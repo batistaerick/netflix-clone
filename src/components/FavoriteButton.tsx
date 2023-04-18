@@ -10,12 +10,14 @@ interface FavoriteButtonProps {
 
 export default function FavoriteButton({ movieId }: FavoriteButtonProps) {
   const { mutate: mutateFavorites } = useFavorites();
-  const { data, mutate } = useCurrentUser();
+  const { data: currentUser, mutate } = useCurrentUser();
 
   const isFavorite = useMemo(() => {
-    const list = data?.favoriteIds || [];
+    const list = currentUser?.favoriteIds || [];
     return list.includes(movieId);
-  }, [data, movieId]);
+  }, [currentUser, movieId]);
+
+  console.log('Favorito', isFavorite);
 
   const toggleFavorites = useCallback(async () => {
     let response;
@@ -28,20 +30,20 @@ export default function FavoriteButton({ movieId }: FavoriteButtonProps) {
     const updatedFavoritesIds = response?.data?.favoriteIds;
 
     mutate({
-      ...data,
+      ...currentUser,
       favoriteIds: updatedFavoritesIds,
     });
     mutateFavorites();
-  }, [movieId, isFavorite, data, mutate, mutateFavorites]);
+  }, [movieId, isFavorite, currentUser, mutate, mutateFavorites]);
 
   const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus;
 
   return (
     <div
       className={`
-      cursor-pointer group/item w-6 h-6 lg:w-10 lg:h-10
-      border-white border-2 rounded-full
-      flex justify-center items-center transition hover:border-neutral-300
+        cursor-pointer group/item w-6 h-6 lg:w-10 lg:h-10
+        border-white border-2 rounded-full
+        flex justify-center items-center transition hover:border-neutral-300
       `}
       onClick={toggleFavorites}
     >

@@ -52,17 +52,15 @@ export async function DELETE(request: Request) {
     }
     const updatedFavoriteIds = without(favoriteIds, movieId);
 
-    const user = await prismadb.user.update({
+    const updatedUser = await prismadb.user.update({
       where: {
         email: email || '',
       },
       data: {
-        favoriteIds: {
-          push: updatedFavoriteIds,
-        },
+        favoriteIds: updatedFavoriteIds,
       },
     });
-    return new Response(JSON.stringify(user));
+    return new Response(JSON.stringify(updatedUser));
   } catch (error) {
     console.error(error);
   }
