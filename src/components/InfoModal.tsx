@@ -29,7 +29,7 @@ export default function InfoModal({ visible, onClose }: InfoModalProps) {
   }
 
   return (
-    <div className="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black transition duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black/80 transition duration-300">
       <div className="mx-auth relative w-auto max-w-3xl overflow-hidden rounded-md">
         <div
           className={`relative flex-auto transform bg-zinc-900 drop-shadow-md duration-300 ${isVisible ? 'scale-100' : 'scale-0'}`}
@@ -44,7 +44,7 @@ export default function InfoModal({ visible, onClose }: InfoModalProps) {
               loop
             />
             <button
-              className="bg-opacity-70 absolute top-3 right-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black"
+              className="absolute top-3 right-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black/70"
               onClick={handleClose}
             >
               <AiOutlineClose className="text-white" size={20} />

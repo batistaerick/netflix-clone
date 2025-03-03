@@ -1,4 +1,6 @@
-import Provider from '@/components/Provider';
+import { auth } from '@/libs/auth';
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
@@ -18,18 +20,22 @@ export const metadata = {
   description: 'Made by Erick',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const session: Session | null = await auth();
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Provider>{children}</Provider>
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} relative antialiased`}
+        >
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

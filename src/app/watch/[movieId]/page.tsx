@@ -21,7 +21,7 @@ export default function Watch({ params }: Readonly<WatchProps>) {
 
   return (
     <div className="h-screen w-screen bg-black">
-      <nav className="bg-opacity-70 fixed z-10 flex w-full flex-row items-center gap-8 bg-black p-4">
+      <nav className="fixed z-10 flex w-full flex-row items-center gap-8 bg-black/70 p-4">
         <AiOutlineArrowLeft
           className="cursor-pointer text-white"
           size={40}

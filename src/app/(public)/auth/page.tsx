@@ -50,13 +50,13 @@ export default function Auth() {
   }
 
   return (
-    <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
-      <div className="lg:bg-opacity-50 h-full w-full bg-black">
+    <div className="relative h-screen w-screen bg-[url('/images/hero.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
+      <div className="h-full w-full bg-black lg:bg-black/50">
         <nav className="px-12 py-5">
           <Image src="/images/logo.png" alt="Logo" width={120} height={120} />
         </nav>
         <div className="flex justify-center">
-          <div className="bg-opacity-70 lg: mt-2 w-full max-w-md self-center rounded-md bg-black px-16 py-16 lg:w-2/5">
+          <div className="lg: mt-2 w-full max-w-md self-center rounded-md bg-black/75 px-16 py-16 lg:w-2/5">
             <h2 className="mb-8 text-4xl font-semibold text-white">
               {variant === 'login' ? 'Sign in' : 'Sign up'}
             </h2>
