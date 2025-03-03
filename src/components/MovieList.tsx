@@ -1,6 +1,7 @@
 import MovieCard from '@/components/MovieCard';
 import type { Movie } from '@prisma/client';
 import { isEmpty } from 'lodash';
+import type { JSX } from 'react';
 
 interface MovieListProps {
   data: Movie[];
@@ -19,9 +20,11 @@ export default function MovieList({ data, title }: Readonly<MovieListProps>) {
           {title}
         </p>
         <div className="grid grid-cols-4 gap-2">
-          {data.map((movie: Movie) => (
-            <MovieCard key={movie.id} data={movie} />
-          ))}
+          {data.map(
+            (movie: Movie): JSX.Element => (
+              <MovieCard key={movie.id} data={movie} />
+            )
+          )}
         </div>
       </div>
     </div>

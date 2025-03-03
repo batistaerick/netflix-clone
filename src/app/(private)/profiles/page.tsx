@@ -16,12 +16,12 @@ export default function Profiles() {
         <div className="mt-10 flex items-center justify-center gap-8">
           <button onClick={(): void => push('/')}>
             <div className="group mx-auto w-44 flex-row">
-              <div className="flex h-44 w-44 items-center justify-center overflow-hidden rounded-md border-2 border-transparent group-hover:cursor-pointer group-hover:border-white">
+              <div className="flex items-center justify-center overflow-hidden rounded-md border-2 border-transparent group-hover:cursor-pointer group-hover:border-white">
                 <Image
                   src="/images/default-blue.png"
                   alt="default-blue"
-                  width={10}
-                  height={10}
+                  width={180}
+                  height={180}
                 />
               </div>
               <div className="mt-4 text-center text-2xl text-gray-400 group-hover:text-white">

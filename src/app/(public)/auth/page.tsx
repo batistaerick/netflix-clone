@@ -1,8 +1,15 @@
 'use client';
 import Input from '@/components/Input';
-import { signIn, type SignInResponse } from 'next-auth/react';
+import { signIn, useSession, type SignInResponse } from 'next-auth/react';
 import Image from 'next/image';
-import { ChangeEvent, KeyboardEvent, useCallback, useState } from 'react';
+import { redirect } from 'next/navigation';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -11,6 +18,13 @@ export default function Auth() {
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [variant, setVariant] = useState<string>('login');
+  const { status } = useSession();
+
+  useEffect((): void => {
+    if (status === 'authenticated') {
+      redirect('/');
+    }
+  });
 
   const toggleVariant: () => void = useCallback(
     (): void =>
@@ -47,6 +61,10 @@ export default function Auth() {
         await register();
       }
     }
+  }
+
+  if (status === 'loading' || status === 'authenticated') {
+    return <div />;
   }
 
   return (

@@ -37,7 +37,7 @@ export default function InfoModal({ visible, onClose }: InfoModalProps) {
           <div className="relative h-96">
             <video
               className="h-full w-full object-cover brightness-[60%]"
-              src={data?.videoUrl ?? ''}
+              src={data?.videoUrl}
               poster={data?.thumbnailUrl}
               autoPlay
               muted

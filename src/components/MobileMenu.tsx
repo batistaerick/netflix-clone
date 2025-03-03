@@ -2,7 +2,7 @@ interface MobileMenuProps {
   visible?: boolean;
 }
 
-export default function MobileMenu({ visible }: MobileMenuProps) {
+export default function MobileMenu({ visible }: Readonly<MobileMenuProps>) {
   if (!visible) {
     return null;
   }

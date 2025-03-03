@@ -6,11 +6,11 @@ interface AccountMenuProps {
   visible?: boolean;
 }
 
-export default function AccountMenu({ visible }: AccountMenuProps) {
+export default function AccountMenu({ visible }: Readonly<AccountMenuProps>) {
   const { data } = useCurrentUser();
 
   if (!visible) {
-    return null;
+    return <></>;
   }
 
   return (
@@ -21,8 +21,8 @@ export default function AccountMenu({ visible }: AccountMenuProps) {
             className="rounded-md"
             src="/images/default-blue.png"
             alt="default-blue"
-            width={10}
-            height={10}
+            width={50}
+            height={50}
           />
           <p className="text-sm text-white group-hover/item:underline">
             {data?.name}
@@ -31,9 +31,9 @@ export default function AccountMenu({ visible }: AccountMenuProps) {
         <hr className="my-4 h-px border-0 bg-gray-600" />
         <button
           className="px-3 text-center text-sm text-white hover:underline"
-          onClick={() => signOut()}
+          onClick={(): Promise<void> => signOut()}
         >
-          Sign out of Netflix
+          Sign out
         </button>
       </div>
     </div>

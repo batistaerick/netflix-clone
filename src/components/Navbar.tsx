@@ -40,7 +40,7 @@ export default function Navbar() {
       <div
         className={`flex flex-row items-center px-4 py-6 transition duration-500 md:px-16 ${showBackground ? 'bg-zinc-900/90' : ''}`}
       >
-        <Image src="/images/logo.png" alt="Logo" width={10} height={10} />
+        <Image src="/images/logo.png" alt="Logo" width={100} height={100} />
         <div className="ml-8 hidden flex-row gap-7 lg:flex">
           <NavbarItem label="Home" />
           <NavbarItem label="Series" />
@@ -74,8 +74,8 @@ export default function Navbar() {
               <Image
                 src="/images/default-blue.png"
                 alt="default-blue"
-                width={10}
-                height={10}
+                width={100}
+                height={100}
               />
             </div>
             <BsChevronDown
