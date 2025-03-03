@@ -16,24 +16,11 @@ export default function Input({
   type,
   onKeyDown,
   onChange,
-}: InputProps) {
+}: Readonly<InputProps>) {
   return (
     <div className="relative">
       <input
-        className={`
-          block
-          rounded-md
-          px-6
-          pt-6
-          pb-1
-          w-full
-          text-md
-          text-white
-          bg-neutral-700
-          appearance-none
-          focus:ring-0
-          peer
-        `}
+        className="text-md peer block w-full appearance-none rounded-md bg-neutral-700 px-6 pt-6 pb-1 text-white focus:ring-0"
         placeholder=" "
         id={id}
         type={type}
@@ -42,23 +29,7 @@ export default function Input({
         onChange={onChange}
       />
       <label
-        className={`
-          absolute
-          text-md
-          text-zinc-400
-          duration-150
-          transform
-          -translate-y-3
-          scale-75
-          top-4
-          z-10
-          origin-[0]
-          left-6
-          peer-placeholder-shown:scale-100
-          peer-placeholder-shown:translate-y-0
-          peer-focus:scale-75
-          peer-focus:-translate-y-3
-        `}
+        className="text-md absolute top-4 left-6 z-10 origin-[0] -translate-y-3 scale-75 transform text-zinc-400 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75"
         htmlFor={id}
       >
         {label}

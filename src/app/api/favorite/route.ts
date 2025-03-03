@@ -1,32 +1,23 @@
-import prismadb from '@/lib/prismadb';
-import serverAuth from '@/lib/serverAuth';
+import { prismadb } from '@/libs/prismadb';
+import serverAuth from '@/libs/serverAuth';
+import type { Movie, User } from '@prisma/client';
 import { without } from 'lodash';
 
 export async function POST(request: Request) {
   try {
-    const {
-      currentUser: { email },
-    } = await serverAuth();
+    const { email } = await serverAuth();
     const { movieId } = await request.json();
 
-    const existingMovie = await prismadb.movie.findUnique({
-      where: {
-        id: movieId,
-      },
+    const existingMovie: Movie | null = await prismadb.movie.findUnique({
+      where: { id: movieId },
     });
 
     if (!existingMovie) {
       throw new Error('Invalid ID');
     }
-    const user = await prismadb.user.update({
-      where: {
-        email: email || '',
-      },
-      data: {
-        favoriteIds: {
-          push: movieId,
-        },
-      },
+    const user: User = await prismadb.user.update({
+      where: { email: email ?? '' },
+      data: { favoriteIds: { push: movieId } },
     });
     return new Response(JSON.stringify(user));
   } catch (error) {
@@ -36,29 +27,21 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const {
-      currentUser: { email, favoriteIds },
-    } = await serverAuth();
+    const { email, favoriteIds } = await serverAuth();
     const { movieId } = await request.json();
 
-    const existingMovie = await prismadb.movie.findUnique({
-      where: {
-        id: movieId,
-      },
+    const existingMovie: Movie | null = await prismadb.movie.findUnique({
+      where: { id: movieId },
     });
 
     if (!existingMovie) {
       throw new Error('Invalid ID');
     }
-    const updatedFavoriteIds = without(favoriteIds, movieId);
+    const updatedFavoriteIds: string[] = without(favoriteIds, movieId);
 
-    const updatedUser = await prismadb.user.update({
-      where: {
-        email: email || '',
-      },
-      data: {
-        favoriteIds: updatedFavoriteIds,
-      },
+    const updatedUser: User = await prismadb.user.update({
+      where: { email: email ?? '' },
+      data: { favoriteIds: updatedFavoriteIds },
     });
     return new Response(JSON.stringify(updatedUser));
   } catch (error) {

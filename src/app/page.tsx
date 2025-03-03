@@ -6,25 +6,11 @@ import Navbar from '@/components/Navbar';
 import useFavorites from '@/hooks/useFavorites';
 import useInfoModal from '@/hooks/useInfoModal';
 import useMovieList from '@/hooks/useMovieList';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const router = useRouter();
-
   const { isOpen, closeModal } = useInfoModal();
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorites();
-  const { status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.push('/auth');
-    },
-  });
-
-  if (status === 'loading') {
-    return <></>;
-  }
 
   return (
     <>

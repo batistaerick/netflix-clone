@@ -1,25 +1,25 @@
+import MovieCard from '@/components/MovieCard';
+import type { Movie } from '@prisma/client';
 import { isEmpty } from 'lodash';
-import MovieCard from './MovieCard';
-import TypeMovie from '@/types/Movie';
 
 interface MovieListProps {
-  data: TypeMovie[];
+  data: Movie[];
   title: string;
 }
 
-export default function MovieList({ data, title }: MovieListProps) {
+export default function MovieList({ data, title }: Readonly<MovieListProps>) {
   if (isEmpty(data)) {
     return null;
   }
 
   return (
-    <div className="px-4 md:px-12 mt-4 space-y-8">
+    <div className="mt-4 space-y-8 px-4 md:px-12">
       <div>
-        <p className="text-white text-base md:text-xl lg:text-2xl font-semibold mb-4">
+        <p className="mb-4 text-base font-semibold text-white md:text-xl lg:text-2xl">
           {title}
         </p>
         <div className="grid grid-cols-4 gap-2">
-          {data.map((movie: TypeMovie) => (
+          {data.map((movie: Movie) => (
             <MovieCard key={movie.id} data={movie} />
           ))}
         </div>

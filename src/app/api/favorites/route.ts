@@ -1,18 +1,13 @@
-import prismadb from '@/lib/prismadb';
-import serverAuth from '@/lib/serverAuth';
+import { prismadb } from '@/libs/prismadb';
+import serverAuth from '@/libs/serverAuth';
+import type { Movie } from '@prisma/client';
 
 export async function GET() {
   try {
-    const {
-      currentUser: { favoriteIds },
-    } = await serverAuth();
+    const { favoriteIds } = await serverAuth();
 
-    const favoriteMovies = await prismadb.movie.findMany({
-      where: {
-        id: {
-          in: favoriteIds,
-        },
-      },
+    const favoriteMovies: Movie[] = await prismadb.movie.findMany({
+      where: { id: { in: favoriteIds } },
     });
     return new Response(JSON.stringify(favoriteMovies));
   } catch (error) {

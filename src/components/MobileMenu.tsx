@@ -8,12 +8,7 @@ export default function MobileMenu({ visible }: MobileMenuProps) {
   }
 
   return (
-    <div
-      className={`
-        w-56 absolute top-8 left-0 py-5 flex flex-col
-        bg-black border-2 border-gray-800
-      `}
-    >
+    <div className="absolute top-8 left-0 flex w-56 flex-col border-2 border-gray-800 bg-black py-5">
       <div className="flex flex-col gap-4">
         <div className="px-3 text-center text-white hover:underline">Home</div>
       </div>

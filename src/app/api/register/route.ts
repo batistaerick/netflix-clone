@@ -1,20 +1,19 @@
-import bcrypt from 'bcrypt';
-import prismadb from '@/lib/prismadb';
+import { prismadb } from '@/libs/prismadb';
+import type { User } from '@prisma/client';
+import { hash } from 'bcryptjs';
 
 export async function POST(request: Request) {
   try {
     const { email, name, password } = await request.json();
-    const existingUser = await prismadb.user.findUnique({
-      where: {
-        email,
-      },
+    const existingUser: User | null = await prismadb.user.findUnique({
+      where: { email },
     });
 
     if (existingUser) {
       return new Response('Error', { status: 422, statusText: 'Email taken' });
     }
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await prismadb.user.create({
+    const hashedPassword: string = await hash(password, 12);
+    const user: User | null = await prismadb.user.create({
       data: {
         email,
         name,

@@ -1,56 +1,39 @@
+import PlayButton from '@/components/PlayButton';
 import useBillboard from '@/hooks/useBillboard';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import PlayButton from './PlayButton';
-import { useCallback } from 'react';
 import useInfoModal from '@/hooks/useInfoModal';
+import { useCallback } from 'react';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 export default function Billboard() {
   const { data } = useBillboard();
   const { openModal } = useInfoModal();
 
   const handleOpenModal = useCallback(
-    () => openModal(data?.id),
+    () => openModal(data?.id ?? ''),
     [openModal, data?.id]
   );
 
   return (
     <div className="relative h-[56.25vw]">
       <video
-        className={`
-          w-full h-[56.25vw] object-cover brightness-[60%]
-        `}
+        className="h-[56.25vw] w-full object-cover brightness-[60%]"
         autoPlay
         muted
         loop
         poster={data?.thumbnailUrl}
         src={data?.videoUrl}
       />
-      <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
-        <p
-          className={`
-            text-white text-xl md:text-5xl lg:text-6xl h-full w-[50%] font-bold drop-shadow-xl
-          `}
-        >
+      <div className="absolute top-[30%] ml-4 md:top-[40%] md:ml-16">
+        <p className="h-full w-[50%] text-xl font-bold text-white drop-shadow-xl md:text-5xl lg:text-6xl">
           {data?.title}
         </p>
-        <p
-          className={`
-            text-white text-[8px] md:text-lg mt-3 md:mt-8 w-[90%] md:w-[80%] lg:w-[50%]
-            drop-shadow-xl
-          `}
-        >
+        <p className="mt-3 w-[90%] text-[8px] text-white drop-shadow-xl md:mt-8 md:w-[80%] md:text-lg lg:w-[50%]">
           {data?.description}
         </p>
-        <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
-          <PlayButton movieId={data?.id} />
+        <div className="mt-3 flex flex-row items-center gap-3 md:mt-4">
+          <PlayButton movieId={data?.id ?? ''} />
           <button
-            className={`
-              bg-white text-white bg-opacity-30 rounded-md
-              py-1 md:py-2 px-2 md:px-4 w-auto
-              text-xs lg:text-lg font-semibold
-              flex flex-row items-center
-              hover:bg-opacity-20 transition
-            `}
+            className="bg-opacity-30 hover:bg-opacity-20 flex w-auto flex-row items-center rounded-md bg-white px-2 py-1 text-xs font-semibold text-white transition md:px-4 md:py-2 lg:text-lg"
             onClick={handleOpenModal}
           >
             <AiOutlineInfoCircle className="mr-1" />

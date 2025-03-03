@@ -1,14 +1,15 @@
-import prismadb from '@/lib/prismadb';
-import serverAuth from '@/lib/serverAuth';
+import { prismadb } from '@/libs/prismadb';
+import serverAuth from '@/libs/serverAuth';
+import type { Movie } from '@prisma/client';
 
 export async function GET() {
   try {
     await serverAuth();
 
-    const randomIndex = Math.floor(
+    const randomIndex: number = Math.floor(
       Math.random() * (await prismadb.movie.count())
     );
-    const randomMovies = await prismadb.movie.findMany({
+    const randomMovies: Movie[] = await prismadb.movie.findMany({
       take: 1,
       skip: randomIndex,
     });

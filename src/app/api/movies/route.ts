@@ -1,11 +1,12 @@
-import prismadb from '@/lib/prismadb';
-import serverAuth from '@/lib/serverAuth';
+import { prismadb } from '@/libs/prismadb';
+import serverAuth from '@/libs/serverAuth';
+import type { Movie } from '@prisma/client';
 
 export async function GET() {
   try {
     await serverAuth();
 
-    const movies = await prismadb.movie.findMany();
+    const movies: Movie[] = await prismadb.movie.findMany();
 
     return new Response(JSON.stringify(movies));
   } catch (error) {

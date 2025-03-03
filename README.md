@@ -15,7 +15,7 @@ A Netflix clone for study purposes, you can login with your Google/GitHub accoun
 
 To run locally you need:
 
-- Node.js (18+).
+- Node.js (20+).
 - MongoDB.
 - Create an **_.env_** file with the following values:
 
