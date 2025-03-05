@@ -1,7 +1,16 @@
+import { hashPassword } from '@/libs/crypt';
+import currentUser from '@/libs/currentUser';
 import { prismadb } from '@/libs/prismadb';
-import serverAuth from '@/libs/serverAuth';
 import type { User } from '@prisma/client';
-import { hash } from 'bcryptjs';
+
+export async function GET() {
+  try {
+    const user: User = await currentUser();
+    return new Response(JSON.stringify(user));
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -13,26 +22,17 @@ export async function POST(request: Request) {
     if (existingUser) {
       return new Response('Error', { status: 422, statusText: 'Email taken' });
     }
-    const hashedPassword: string = await hash(password, 12);
+    const hashedPassword: string = await hashPassword(password);
     const user: User | null = await prismadb.user.create({
       data: {
         email,
         name,
-        hashedPassword,
+        password: hashedPassword,
         image: '',
         emailVerified: new Date(),
       },
     });
     return new Response(JSON.stringify(user));
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function GET() {
-  try {
-    const currentUser: User = await serverAuth();
-    return new Response(JSON.stringify(currentUser));
   } catch (error) {
     console.error(error);
   }

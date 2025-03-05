@@ -22,7 +22,7 @@ export default function MovieList({ data, title }: Readonly<MovieListProps>) {
         <div className="grid grid-cols-4 gap-2">
           {data.map(
             (movie: Movie): JSX.Element => (
-              <MovieCard key={movie.id} data={movie} />
+              <MovieCard key={movie.id} movie={movie} />
             )
           )}
         </div>

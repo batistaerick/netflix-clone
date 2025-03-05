@@ -1,5 +1,6 @@
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useFavorites from '@/hooks/useFavorites';
+import { deleteFetcher, postFetcher } from '@/libs/fetcher';
 import type { User } from '@prisma/client';
 import { useCallback, useMemo } from 'react';
 import type { IconType } from 'react-icons';
@@ -25,15 +26,14 @@ export default function FavoriteButton({
       let response: User;
 
       if (isFavorite) {
-        response = await fetch('/api/favorites', {
-          method: 'DELETE',
-          body: JSON.stringify({ movieId }),
-        }).then((response: Response): Promise<User> => response.json());
+        response = await deleteFetcher<User, { movieId: string }>(
+          '/favorites',
+          { movieId }
+        );
       } else {
-        response = await fetch('/api/favorites', {
-          method: 'POST',
-          body: JSON.stringify({ movieId }),
-        }).then((response: Response): Promise<User> => response.json());
+        response = await postFetcher<User, { movieId: string }>('/favorites', {
+          movieId,
+        });
       }
       const updatedFavoritesIds: string[] = response?.favoriteIds;
 

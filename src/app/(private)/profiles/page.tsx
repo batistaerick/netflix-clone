@@ -1,10 +1,9 @@
 'use client';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export default function Profiles() {
-  const { push } = useRouter();
   const { data, isLoading } = useCurrentUser();
 
   if (isLoading || !data) {
@@ -18,7 +17,7 @@ export default function Profiles() {
           Who is watching?
         </h1>
         <div className="mt-10 flex items-center justify-center gap-8">
-          <button onClick={(): void => push('/')}>
+          <button onClick={(): void => redirect('/')}>
             <div className="group mx-auto w-44 flex-row">
               <div className="flex items-center justify-center overflow-hidden rounded-md border-2 border-transparent group-hover:cursor-pointer group-hover:border-white">
                 <Image

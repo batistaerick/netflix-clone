@@ -1,5 +1,5 @@
+import currentUser from '@/libs/currentUser';
 import { prismadb } from '@/libs/prismadb';
-import serverAuth from '@/libs/serverAuth';
 import type { Movie } from '@prisma/client';
 
 interface TypeContext {
@@ -8,7 +8,7 @@ interface TypeContext {
 
 export async function GET(_: Request, { params }: TypeContext) {
   try {
-    await serverAuth();
+    await currentUser();
     const { movieId } = await params;
 
     if (!movieId || typeof movieId !== 'string') {

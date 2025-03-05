@@ -1,16 +1,11 @@
-import fetcher from '@/libs/fetcher';
+import { getFetcher } from '@/libs/fetcher';
 import type { Movie } from '@prisma/client';
-import useSWR from 'swr';
+import useSWR, { type SWRResponse } from 'swr';
 
-export default function useBillboard() {
-  const { data, error, isLoading } = useSWR(
-    '/api/movies/random',
-    fetcher<Movie>,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  );
-  return { data, error, isLoading };
+export default function useBillboard(): SWRResponse<Movie, Error> {
+  return useSWR('/movies/random', getFetcher<Movie>, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 }

@@ -1,11 +1,11 @@
+import currentUser from '@/libs/currentUser';
 import { prismadb } from '@/libs/prismadb';
-import serverAuth from '@/libs/serverAuth';
 import type { Movie, User } from '@prisma/client';
 import { without } from 'lodash';
 
 export async function POST(request: Request) {
   try {
-    const { email } = await serverAuth();
+    const { email } = await currentUser();
     const { movieId } = await request.json();
 
     const existingMovie: Movie | null = await prismadb.movie.findUnique({
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const { email, favoriteIds } = await serverAuth();
+    const { email, favoriteIds } = await currentUser();
     const { movieId } = await request.json();
 
     const existingMovie: Movie | null = await prismadb.movie.findUnique({
@@ -51,7 +51,7 @@ export async function DELETE(request: Request) {
 
 export async function GET() {
   try {
-    const { favoriteIds } = await serverAuth();
+    const { favoriteIds } = await currentUser();
 
     const favoriteMovies: Movie[] = await prismadb.movie.findMany({
       where: { id: { in: favoriteIds } },

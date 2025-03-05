@@ -1,16 +1,11 @@
-import fetcher from '@/libs/fetcher';
+import { getFetcher } from '@/libs/fetcher';
 import { type Movie } from '@prisma/client';
-import useSWR from 'swr';
+import useSWR, { type SWRResponse } from 'swr';
 
-export default function useFavorites() {
-  const { data, error, isLoading, mutate } = useSWR(
-    '/api/favorites',
-    fetcher<Movie[]>,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  );
-  return { data, error, isLoading, mutate };
+export default function useFavorites(): SWRResponse<Movie[], Error> {
+  return useSWR('/favorites', getFetcher<Movie[]>, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 }

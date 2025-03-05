@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, type StoreApi, type UseBoundStore } from 'zustand';
 
 export interface ModalStoreInterface {
   movieId?: string;
@@ -7,11 +7,12 @@ export interface ModalStoreInterface {
   closeModal: () => void;
 }
 
-const useInfoModal = create<ModalStoreInterface>((set) => ({
-  movieId: undefined,
-  isOpen: false,
-  openModal: (movieId: string) => set({ isOpen: true, movieId }),
-  closeModal: () => set({ isOpen: false, movieId: undefined }),
-}));
+const useInfoModal: UseBoundStore<StoreApi<ModalStoreInterface>> =
+  create<ModalStoreInterface>((set) => ({
+    movieId: undefined,
+    isOpen: false,
+    openModal: (movieId: string): void => set({ isOpen: true, movieId }),
+    closeModal: (): void => set({ isOpen: false, movieId: undefined }),
+  }));
 
 export default useInfoModal;

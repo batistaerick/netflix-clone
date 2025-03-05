@@ -1,16 +1,17 @@
 import { auth } from '@/libs/auth';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
+import type { NextFontWithVariable } from 'next/dist/compiled/@next/font';
 import { Geist, Geist_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
 
-const geistSans = Geist({
+const geistSans: NextFontWithVariable = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
+const geistMono: NextFontWithVariable = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });

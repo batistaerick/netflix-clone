@@ -1,5 +1,7 @@
 'use client';
 import Input from '@/components/Input';
+import { postFetcher } from '@/libs/fetcher';
+import type { User } from '@prisma/client';
 import {
   signIn,
   useSession,
@@ -53,10 +55,7 @@ export default function Auth() {
   }, [email, password]);
 
   const register: () => Promise<void> = useCallback(async (): Promise<void> => {
-    await fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify({ email, name, password }),
-    })
+    await postFetcher<User, Partial<User>>('/users', { email, name, password })
       .then(login)
       .catch((error: unknown): void => console.error(error));
   }, [email, password, name, login]);

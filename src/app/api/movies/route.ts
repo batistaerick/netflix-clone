@@ -1,10 +1,10 @@
+import currentUser from '@/libs/currentUser';
 import { prismadb } from '@/libs/prismadb';
-import serverAuth from '@/libs/serverAuth';
 import type { Movie } from '@prisma/client';
 
 export async function GET() {
   try {
-    await serverAuth();
+    await currentUser();
 
     const movies: Movie[] = await prismadb.movie.findMany();
 

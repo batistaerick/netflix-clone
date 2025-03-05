@@ -3,7 +3,7 @@ import { prismadb } from '@/libs/prismadb';
 import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
 
-export default async function serverAuth(): Promise<User> {
+export default async function currentUser(): Promise<User> {
   const session: Session | null = await auth();
 
   if (!session?.user?.email) {
