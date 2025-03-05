@@ -3,10 +3,14 @@ import type { Movie } from '@prisma/client';
 import useSWR from 'swr';
 
 export default function useBillboard() {
-  const { data, error, isLoading } = useSWR('/api/random', fetcher<Movie>, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  const { data, error, isLoading } = useSWR(
+    '/api/movies/random',
+    fetcher<Movie>,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
   return { data, error, isLoading };
 }

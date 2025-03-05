@@ -53,7 +53,7 @@ export default function Auth() {
   }, [email, password]);
 
   const register: () => Promise<void> = useCallback(async (): Promise<void> => {
-    await fetch('/api/register', {
+    await fetch('/api/users', {
       method: 'POST',
       body: JSON.stringify({ email, name, password }),
     })

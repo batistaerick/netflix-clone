@@ -4,7 +4,7 @@ import useSWR from 'swr';
 
 export default function useCurrentUser() {
   const { data, error, isLoading, mutate } = useSWR(
-    '/api/current',
+    '/api/users',
     fetcher<User>
   );
   return {

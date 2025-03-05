@@ -1,5 +1,3 @@
-'use server';
-
 export async function hashPassword(password: string): Promise<string> {
   const SALT: string | undefined = process.env.PASSWORD_SALT;
 
@@ -18,7 +16,7 @@ export async function hashPassword(password: string): Promise<string> {
     {
       name: 'PBKDF2',
       salt: encoder.encode(SALT),
-      iterations: 100000,
+      iterations: 50000,
       hash: 'SHA-256',
     },
     key,

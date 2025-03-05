@@ -25,12 +25,12 @@ export default function FavoriteButton({
       let response: User;
 
       if (isFavorite) {
-        response = await fetch('/api/favorite', {
+        response = await fetch('/api/favorites', {
           method: 'DELETE',
           body: JSON.stringify({ movieId }),
         }).then((response: Response): Promise<User> => response.json());
       } else {
-        response = await fetch('/api/favorite', {
+        response = await fetch('/api/favorites', {
           method: 'POST',
           body: JSON.stringify({ movieId }),
         }).then((response: Response): Promise<User> => response.json());

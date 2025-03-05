@@ -1,5 +1,6 @@
 import { hashPassword } from '@/libs/crypt';
 import { prismadb } from '@/libs/prismadb';
+import serverAuth from '@/libs/serverAuth';
 import type { User } from '@prisma/client';
 
 export async function POST(request: Request) {
@@ -23,6 +24,15 @@ export async function POST(request: Request) {
       },
     });
     return new Response(JSON.stringify(user));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function GET() {
+  try {
+    const currentUser: User = await serverAuth();
+    return new Response(JSON.stringify(currentUser));
   } catch (error) {
     console.error(error);
   }
