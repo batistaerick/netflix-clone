@@ -8,8 +8,8 @@ export default function Billboard() {
   const { data } = useBillboard();
   const { openModal } = useInfoModal();
 
-  const handleOpenModal = useCallback(
-    () => openModal(data?.id ?? ''),
+  const handleOpenModal: () => void = useCallback(
+    (): void => openModal(data?.id ?? ''),
     [openModal, data?.id]
   );
 

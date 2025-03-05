@@ -11,7 +11,10 @@ interface InfoModalProps {
   onClose: () => void;
 }
 
-export default function InfoModal({ visible, onClose }: InfoModalProps) {
+export default function InfoModal({
+  visible,
+  onClose,
+}: Readonly<InfoModalProps>) {
   const [isVisible, setIsVisible] = useState<boolean>(!!visible);
 
   const { movieId } = useInfoModal();

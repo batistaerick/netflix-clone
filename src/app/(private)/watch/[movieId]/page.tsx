@@ -12,7 +12,9 @@ export default function Watch({ params }: Readonly<WatchProps>) {
   const [movieId, setMovieId] = useState<string | null>(null);
 
   useEffect((): void => {
-    params.then(({ movieId }): void => setMovieId(movieId));
+    params.then(({ movieId }: { movieId: string }): void =>
+      setMovieId(movieId)
+    );
   }, [params]);
 
   const { data } = useMovie(movieId ?? '');

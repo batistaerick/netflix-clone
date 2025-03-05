@@ -12,16 +12,16 @@ export default function Navbar() {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
 
-  const toggleMobileMenu = useCallback(() => {
-    setShowMobileMenu((current) => !current);
+  const toggleMobileMenu: () => void = useCallback((): void => {
+    setShowMobileMenu((current: boolean): boolean => !current);
   }, []);
 
-  const toggleAccountMenu = useCallback(() => {
-    setShowAccountMenu((current) => !current);
+  const toggleAccountMenu: () => void = useCallback((): void => {
+    setShowAccountMenu((current: boolean): boolean => !current);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
+  useEffect((): (() => void) => {
+    const handleScroll: () => void = (): void => {
       if (window.scrollY >= TOP_OFFSET) {
         setShowBackground(true);
       } else {
@@ -30,7 +30,7 @@ export default function Navbar() {
     };
     window.addEventListener('scroll', handleScroll);
 
-    return () => {
+    return (): void => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);

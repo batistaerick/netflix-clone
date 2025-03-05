@@ -2,9 +2,9 @@ interface NavbarItemProps {
   label: string;
 }
 
-export default function NavbarItem({ label }: NavbarItemProps) {
+export default function NavbarItem({ label }: Readonly<NavbarItemProps>) {
   return (
-    <div className="text-white cursor-pointer hover:text-gray-300 transition">
+    <div className="cursor-pointer text-white transition hover:text-gray-300">
       {label}
     </div>
   );
