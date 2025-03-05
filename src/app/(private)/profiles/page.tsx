@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation';
 
 export default function Profiles() {
   const { push } = useRouter();
-  const { data } = useCurrentUser();
+  const { data, isLoading } = useCurrentUser();
+
+  if (isLoading || !data) {
+    return <div />;
+  }
 
   return (
     <div className="flex h-full items-center justify-center">

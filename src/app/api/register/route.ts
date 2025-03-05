@@ -1,6 +1,6 @@
+import { hashPassword } from '@/libs/crypt';
 import { prismadb } from '@/libs/prismadb';
 import type { User } from '@prisma/client';
-import { hash } from 'bcryptjs';
 
 export async function POST(request: Request) {
   try {
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     if (existingUser) {
       return new Response('Error', { status: 422, statusText: 'Email taken' });
     }
-    const hashedPassword: string = await hash(password, 12);
+    const hashedPassword: string = await hashPassword(password);
     const user: User | null = await prismadb.user.create({
       data: {
         email,

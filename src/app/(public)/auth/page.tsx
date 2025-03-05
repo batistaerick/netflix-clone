@@ -1,6 +1,11 @@
 'use client';
 import Input from '@/components/Input';
-import { signIn, useSession, type SignInResponse } from 'next-auth/react';
+import {
+  signIn,
+  useSession,
+  type SessionContextValue,
+  type SignInResponse,
+} from 'next-auth/react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import {
@@ -14,15 +19,16 @@ import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 export default function Auth() {
+  const [isError, setIsError] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [variant, setVariant] = useState<string>('login');
-  const { status } = useSession();
+  const { status }: SessionContextValue = useSession();
 
   useEffect((): void => {
     if (status === 'authenticated') {
-      redirect('/');
+      redirect('/profiles');
     }
   });
 
@@ -35,11 +41,15 @@ export default function Auth() {
   );
 
   const login: () => Promise<void> = useCallback(async (): Promise<void> => {
-    await signIn('credentials', {
+    const response: SignInResponse | undefined = await signIn('credentials', {
       email,
       password,
-      callbackUrl: '/profiles',
-    }).catch((error: unknown): void => console.error(error));
+      redirect: false,
+    });
+
+    if (response?.error) {
+      setIsError(true);
+    }
   }, [email, password]);
 
   const register: () => Promise<void> = useCallback(async (): Promise<void> => {
@@ -90,25 +100,34 @@ export default function Auth() {
                   }
                 />
               )}
-              <Input
-                id="email"
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-                  setEmail(String(event.currentTarget.value))
-                }
-              />
-              <Input
-                id="password"
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-                  setPassword(String(event.currentTarget.value))
-                }
-                onKeyDown={onKeyDown}
-              />
+              <div
+                className={`${isError && 'rounded-md border border-red-400'}`}
+              >
+                <Input
+                  id="email"
+                  label="Email"
+                  type="email"
+                  value={email}
+                  onChange={(event: ChangeEvent<HTMLInputElement>): void =>
+                    setEmail(String(event.currentTarget.value))
+                  }
+                />
+              </div>
+              <div
+                className={`${isError && 'rounded-md border border-red-400'}`}
+              >
+                <Input
+                  id="password"
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={(event: ChangeEvent<HTMLInputElement>): void =>
+                    setPassword(String(event.currentTarget.value))
+                  }
+                  onKeyDown={onKeyDown}
+                />
+              </div>
+              {isError && <div>Invalid email or password!</div>}
             </div>
             <button
               className="mt-10 w-full rounded-md bg-red-600 py-3 text-white transition hover:bg-red-700"
