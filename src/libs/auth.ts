@@ -27,30 +27,7 @@ export const authOptions: NextAuthConfig = {
         },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(
-        credentials: Partial<Record<'email' | 'password', unknown>>
-      ): Promise<User | null> {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
-
-        if (!email || !password) {
-          throw new Error('Email and password required');
-        }
-        const user: User | null = await prismadb.user.findUnique({
-          where: { email },
-        });
-
-        if (!user?.hashedPassword) {
-          throw new Error('Email does not exist');
-        }
-        const isCorrectPassword = await compare(password, user.hashedPassword);
-        if (!isCorrectPassword) {
-          throw new Error('Incorrect password');
-        }
-        return user;
-      },
+      authorize,
     }),
   ],
   pages: { signIn: '/auth' },
@@ -59,5 +36,31 @@ export const authOptions: NextAuthConfig = {
   session: { strategy: 'jwt', maxAge: 604800 },
   secret: process.env.NEXTAUTH_SECRET,
 };
+
+async function authorize(
+  credentials: Partial<Record<'email' | 'password', unknown>>
+): Promise<User | null> {
+  const { email, password } = credentials as {
+    email: string;
+    password: string;
+  };
+
+  if (!email || !password) {
+    throw new Error('Email and password required');
+  }
+  const user: User | null = await prismadb.user.findUnique({
+    where: { email },
+  });
+
+  if (!user?.hashedPassword) {
+    throw new Error('Email does not exist');
+  }
+  const isAuthorized: boolean = await compare(password, user.hashedPassword);
+
+  if (!isAuthorized) {
+    throw new Error('Incorrect password');
+  }
+  return user;
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
