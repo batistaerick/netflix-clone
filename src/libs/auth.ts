@@ -1,11 +1,12 @@
 import { prismadb } from '@/libs/prismadb';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { User } from '@prisma/client';
+import { compare } from 'bcryptjs';
 import NextAuth, { type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-import { comparePassword } from './crypt';
+import { z, type SafeParseReturnType } from 'zod';
 
 export const authOptions: NextAuthConfig = {
   providers: [
@@ -45,11 +46,15 @@ type Credentials = {
 async function authorize(
   credentials: Partial<Record<'email' | 'password', unknown>>
 ): Promise<User | null> {
-  const { email, password } = credentials as Credentials;
+  const { data }: SafeParseReturnType<Credentials, Credentials> = z
+    .object({ email: z.string().email(), password: z.string().min(6) })
+    .safeParse(credentials);
 
-  if (!email || !password) {
+  if (!data?.email || !data?.password) {
     throw new Error('Email and password required');
   }
+  const { email, password } = data;
+
   const user: User | null = await prismadb.user.findUnique({
     where: { email },
   });
@@ -57,10 +62,7 @@ async function authorize(
   if (!user?.hashedPassword) {
     throw new Error('Email does not exist');
   }
-  const isAuthorized: boolean = await comparePassword(
-    password,
-    user.hashedPassword
-  );
+  const isAuthorized: boolean = await compare(password, user.hashedPassword);
 
   if (!isAuthorized) {
     throw new Error('Incorrect password');
