@@ -14,7 +14,7 @@ export default function AccountMenu({ visible }: Readonly<AccountMenuProps>) {
   }
 
   return (
-    <div className="absolute top-14 right-0 flex w-56 flex-col border-2 border-gray-800 bg-black py-5">
+    <div className="absolute top-20 right-14 flex w-56 flex-col border-2 border-gray-800 bg-black py-5">
       <div className="flex flex-col gap-3">
         <div className="group/item flex w-full flex-row items-center gap-3 px-3">
           <Image
