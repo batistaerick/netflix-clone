@@ -137,7 +137,7 @@ export default function Auth() {
             <div className="mt-8 flex flex-row items-center justify-center gap-4">
               <FcGoogle
                 className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white transition hover:opacity-80"
-                onClick={(): Promise<SignInResponse | undefined> =>
+                onClick={async (): Promise<SignInResponse | undefined> =>
                   signIn('google', { callbackUrl: '/profiles' })
                 }
                 size={30}
@@ -145,7 +145,7 @@ export default function Auth() {
               <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white transition hover:opacity-80">
                 <FaGithub
                   className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black transition hover:opacity-80"
-                  onClick={(): Promise<SignInResponse | undefined> =>
+                  onClick={async (): Promise<SignInResponse | undefined> =>
                     signIn('github', { callbackUrl: '/profiles' })
                   }
                   size={30}
